@@ -1,0 +1,45 @@
+{
+  "name": "@cs/js-lodop-print-library",
+  "version": "1.0.0",
+  "description": "lodop打印组件",
+  "module": "lib/lodop-print.esm.js",
+  "browser": "lib/lodop-print.iife.js",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yearrow/js-lodop-print-library.git"
+  },
+  "keywords": [
+    "print",
+    "lodop"
+  ],
+  "author": "clj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yearrow/js-lodop-print-library/issues"
+  },
+  "homepage": "https://github.com/yearrow/js-lodop-print-library#readme",
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "core-js": "3.8.3",
+    "eslint": "^8.23.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.5",
+    "eslint-plugin-promise": "^6.0.1",
+    "esm": "^3.2.25",
+    "rollup": "^2.60.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-terser": "^7.0.2"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
