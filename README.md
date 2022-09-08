@@ -1,2 +1,2 @@
 # js-lodop-print
-基于lodop的打印组件
+lodop打印组件
