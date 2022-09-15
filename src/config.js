@@ -20,7 +20,7 @@ const defaultConfig = {
       varModeValue: 0 // 以可打印区域的边缘为基点
     },
     SET_PRINT_PAGESIZE: {
-      intOrient: 2,
+      intOrient: 2, // 横向打印，固定纸张
       PageWidth: 0,
       PageHeight: 0,
       strPageName: 'A4'
