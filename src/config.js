@@ -46,7 +46,7 @@ export {
 //   Alignment: 1, // 数字型，1--左靠齐 2--居中 3--右靠齐
 //   LineSpacing: , // 纯文本的行间距
 //   LetterSpacing: , // 纯文本的字间距
-//   AlignJustify: , // 设置“text文本”是否两端对齐或“barcode条码文字”靠齐方式
+//   AlignJustify: , // 设置“text文本”是否两端对齐或“barcode条码文字”靠齐方式.设置“text文本”时，1代表两端对齐，0代表不处理（默认）；设置“barcode条码文字”时，0-两端对齐(默认)  1-左靠齐  2-居中  3-右靠齐；
 //   ReadOnly: 0, // 纯文本内容在打印维护时，是否禁止修改 0--否 1--是 默认“是”
 //   TextFrame: , // 文本的外框类型
 //   TextNeatRow: , // 设置多行Text对象文本行是否尽量对齐
@@ -105,6 +105,7 @@ export {
 //   LinkNewPage: , // 如果前面剩余空间不足，关联对象顺序打印时就“从新页开始”
 //   HtmWaitMilSecs: , // 设置超文本下载延迟毫秒数
 //   TextFRepeatrame: , // 设置对象是否在本纸张内有规律重复输出
+//   Repeat: , // 设置对象是否在本纸张内有规律重复输出
 //   AngleOfPageInside: , // 设置内容对象所在页的整体旋转角度（该对象最好是所在页的首对象）
 //   TableRowThickNess: , // 设置htm对象中表格行的自动分页粒度
 //   IDTagForPick: , // 用URL获取整页面后,可按ID或标签摘取页面内的单个元素

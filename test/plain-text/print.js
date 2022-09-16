@@ -24,7 +24,7 @@ function CreatePrintPage() {
       Alignment: 2, // 数字型，1--左靠齐 2--居中 3--右靠齐
       LineSpacing: 20, // 纯文本的行间距（宽度固定之后的换行间距）
       LetterSpacing: 10, // 纯文本的字间距
-      // AlignJustify: 1, // 设置“text文本”是否两端对齐（会分散对齐）或“barcode条码文字”靠齐方式
+      // AlignJustify: 1, // 设置“text文本”是否两端对齐（会分散对齐）,1代表两端对齐，0代表不处理（默认）；
       // ReadOnly: 0, // 纯文本内容在打印维护时，是否禁止修改 0--否 1--是 默认“是”
       TextFrame: 5, // 文本的外框类型
       TextNeatRow: 1, // 设置多行Text对象文本行是否尽量对齐 

@@ -15,6 +15,11 @@ export class DrawComponent {
     this._styleFlie = `<link type='text/css' rel='stylesheet' href='${this._config.STYLE_FILE_PATH + '/print.css'}'/>`;
   }
 
+  // 用于获取打印的属性
+  getPrint () {
+    return LODOP
+  }
+
   // 准备画布
   setBlankPanel () {
     const {
@@ -84,7 +89,7 @@ export class DrawComponent {
 
 
   // 画线组件--建议在文本类函数之前调用
-  drawText (option) {
+  drawLine (option) {
     LODOP.ADD_PRINT_LINE(
       option.params.Top1,
       option.params.Left1,
@@ -108,23 +113,7 @@ export class DrawComponent {
       option.params.Width,
       option.params.Height,
       option.params.CodeType || 'QRCode',
-      option.params. CodeValue
-    );
-
-    for (const item in option.style) {
-      LODOP.SET_PRINT_STYLEA(0, item, option.style[item]);
-    }
-  }
-
-  // 条形码组件
-  drawBarcode (option) {
-    LODOP.ADD_PRINT_BARCODE(
-      option.params.Top,
-      option.params.Left,
-      option.params.Width,
-      option.params.Height,
-      option.params.CodeType || '128A',
-      option.params. CodeValue
+      option.params.CodeValue
     );
 
     for (const item in option.style) {
@@ -146,6 +135,12 @@ export class DrawComponent {
       LODOP.SET_PRINT_STYLEA(0, item, option.style[item]);
     }
   }
+  
+  // ADD_PRINT_SHAPE 图形
+  // SET_SAVE_MODE 保存模式
+  // SAVE_TO_FILE 导出数据到文件
+  // FORMAT 数据格式转换
+  // GET_VALUE 获得数据值
 
   // 不翻页表格
   drawOnePageTable (option, tableData) {
@@ -177,7 +172,6 @@ export class DrawComponent {
       option.params.Height,
       this._styleFlie + `<body>${tableHtml}</body>`
     )
-    LODOP.SET_PRINT_STYLEA(0, 'ItemType', 1);
     for (const item in option.style) {
       LODOP.SET_PRINT_STYLEA(0, item, option.style[item]);
     }
