@@ -12,7 +12,7 @@ export class DrawComponent {
       console.error('未检测到Lodop对象，请引入LodopFuncs.js文件');
     }
     this._config = defaultsDeep(config ?? {}, defaultConfig);
-    this._styleFlie = `<link type='text/css' rel='stylesheet' href='${this._config.STYLE_FILE_PATH + '/print.css'}'/>`;
+    this._styleFlie = `<link type='text/css' rel='stylesheet' href='asset/print.css'/>`;
   }
 
   // 用于获取打印的属性
@@ -28,7 +28,7 @@ export class DrawComponent {
       Width,
       Height,
       strPrintName
-    } = this._config.SYSTEM_DEFAULT_CONF.PRINT_INITA;
+    } = this._config.blankPanel.printInita;
     LODOP.PRINT_INITA(Top, Left, Width, Height, strPrintName);
     const {
       intDispMode,
@@ -37,7 +37,7 @@ export class DrawComponent {
       inWidth,
       intHeight,
       strTitleButtonCaptoin
-    } = this._config.SYSTEM_DEFAULT_CONF.SET_PREVIEW_WINDOW;
+    } = this._config.blankPanel.setPreviewWindow;
     LODOP.SET_PREVIEW_WINDOW(
       intDispMode,
       intToolMode,
@@ -51,12 +51,12 @@ export class DrawComponent {
       PageWidth,
       PageHeight,
       strPageName
-    } = this._config.SYSTEM_DEFAULT_CONF.SET_PRINT_PAGESIZE;
+    } = this._config.blankPanel.setPrintPagesize;
     LODOP.SET_PRINT_PAGESIZE(intOrient, PageWidth, PageHeight, strPageName);
     const {
       strModeType,
       varModeValue
-    } = this._config.SYSTEM_DEFAULT_CONF.SET_SHOW_MODE;
+    } = this._config.blankPanel.setShowMode;
     LODOP.SET_SHOW_MODE(strModeType, varModeValue);
   }
 
@@ -72,67 +72,81 @@ export class DrawComponent {
     }
   }
 
-  // 纯文本组件option:{params, style}
+  /**
+   * 纯文本组件
+   * @param {*} option
+   * position 定位
+   * property 本组件的其他固有属性
+   * params 传入的参数。获取config的默认配置并与其合并
+   */
   drawText (option) {
+    // 判断定位必须为数字，且必传。在转换json的时候判断
+    const params = defaultsDeep(option.params ?? {}, defaultConfig.drawText.style)
+
     LODOP.ADD_PRINT_TEXT(
-      option.params.Top,
-      option.params.Left,
-      option.params.Width,
-      option.params.Height,
-      option.params.strContent
+      option.position.Top,
+      option.position.Left,
+      option.position.Width,
+      option.position.Height,
+      option.property.strContent || '请输入文本'
     );
 
-    for (const item in option.style) {
-      LODOP.SET_PRINT_STYLEA(0, item, option.style[item]);
+    for (const item in params) {
+      LODOP.SET_PRINT_STYLEA(0, item, params[item]);
     }
   }
 
-
-  // 画线组件--建议在文本类函数之前调用
+  /**
+   * 画线组件--建议在文本类函数之前调用
+   * @param {*} option
+   * position 定位
+   * property 本组件的其他固有属性
+   * params 传入的参数。获取config的默认配置并与其合并
+   */
   drawLine (option) {
     LODOP.ADD_PRINT_LINE(
-      option.params.Top1,
-      option.params.Left1,
-      option.params.Top2,
-      option.params.Left2,
-      option.params.intLineStyle,
-      option.params.intLineWidth
+      option.position.Top1,
+      option.position.Left1,
+      option.position.Top2,
+      option.position.Left2,
+      option.property.intLineStyle || 0, // 0--实线 1--破折线 2--点线 3--点划线 4--双点划线
+      option.property.intLineWidth || 1 // 单位是（打印）像素，缺省值是1，非实线的线条宽也是0。
     );
-
-    for (const item in option.style) {
-      LODOP.SET_PRINT_STYLEA(0, item, option.style[item]);
-    }
   }
 
 
   // 二维码组件
   drawBarcode (option) {
+    const params = defaultsDeep(option.params ?? {}, defaultConfig.drawBarcode.style)
+
     LODOP.ADD_PRINT_BARCODE(
-      option.params.Top,
-      option.params.Left,
-      option.params.Width,
-      option.params.Height,
-      option.params.CodeType || 'QRCode',
-      option.params.CodeValue
+      option.position.Top,
+      option.position.Left,
+      option.position.Width,
+      option.position.Height,
+      option.property.CodeType || 'QRCode',
+      option.property.CodeValue
     );
 
-    for (const item in option.style) {
-      LODOP.SET_PRINT_STYLEA(0, item, option.style[item]);
+    for (const item in params) {
+      LODOP.SET_PRINT_STYLEA(0, item, params[item]);
     }
   }
   
   // 图片组件
   drawImage (option) {
+    const params = defaultsDeep(option.params ?? {}, defaultConfig.drawImage.style)
     LODOP.ADD_PRINT_IMAGE(
-      option.params.Top,
-      option.params.Left,
-      option.params.Width,
-      option.params.Height,
-      option.params.strContent
+      option.position.Top,
+      option.position.Left,
+      option.position.Width,
+      option.position.Height,
+      option.property.strContent
+      
     );
 
-    for (const item in option.style) {
-      LODOP.SET_PRINT_STYLEA(0, item, option.style[item]);
+    for (const item in params) {
+      LODOP.SET_PRINT_STYLEA(0, item, params[item]);
     }
   }
   
@@ -185,14 +199,14 @@ export class DrawComponent {
     let blankStr = '';
     const rowHeaderArr = [];
     const propColumns = [];
-    this._constructTableHead(rowHeaderArr, propColumns, option.itemsModel, 0);
+    this._constructTableHead(rowHeaderArr, propColumns, option.orderModel, 0);
     rowHeaderArr.map((item) => tableHeader += '<tr>' + item + '</tr>');
-    const lineNum = option.params.lineNum;
+    const lineNum = option.conditionParams.lineNum;
     // 渲染空白行
     const blankRow = lineNum - (tableData.length % lineNum);
     if (blankRow !== lineNum) {
       for (let x = 1; x <= blankRow; x++) {
-        blankStr += `<tr height="${option.params.lineHeight}px">`;
+        blankStr += `<tr height="${option.conditionParams.lineHeight}px">`;
         for (let y = 1; y <= propColumns.length; y++) {
           blankStr += '<td style="border: solid 1px black;"></td>';
         }
@@ -201,7 +215,7 @@ export class DrawComponent {
     }
     // 渲染
     tableData.map((item) => {
-      tableBody += `<tr height="${option.params.lineHeight}px">`;
+      tableBody += `<tr height="${option.conditionParams.lineHeight}px">`;
       propColumns.map((iitem) => {
         let propValue = '';
         if (iitem.prop) {
@@ -212,7 +226,7 @@ export class DrawComponent {
           }
         }
         tableBody += `<td style="border: solid 1px black;">
-                        <div align="${iitem.align}" style="max-height:${option.params.lineHeight}px;overflow: hidden;padding: 0px 2px;">
+                        <div align="${iitem.align}" style="max-height:${option.conditionParams.lineHeight}px;overflow: hidden;padding: 0px 2px;">
                           ${propValue}
                         </div>
                       </td>`;
@@ -234,22 +248,22 @@ export class DrawComponent {
     } else {
       tableFooter += '<tr height="0px"></tr>';
     }
-    const tableHtml = `<table class="table-paging-content" width="${option.params.Width}"
+    const tableHtml = `<table class="table-paging-content" width="${option.position.Width}"
                         style ="font-family: '宋体', Arial, Helvetica, sans-serif;border-collapse: collapse;font-size: 11px;">
                         <thead>${tableHeader}</thead>
                         <tbody>${tableBody + blankStr}</tbody>
                         <tfoot>${tableFooter}</tfoot>
                     </table>`;
-    const tableHeight = lineNum * (option.params.lineHeight || 30) + 5;
+    const tableHeight = lineNum * (option.conditionParams.lineHeight || 30) + 5;
     LODOP.ADD_PRINT_TABLE(
-      option.params.Top,
-      option.params.Left,
-      option.params.Width,
+      option.position.Top,
+      option.position.Left,
+      option.position.Width,
       tableHeight,
       this._styleFlie + `<body>${tableHtml}</body>`
     );
-    const width = this._config.SYSTEM_DEFAULT_CONF.PRINT_INITA.Width;
-    const height = this._config.SYSTEM_DEFAULT_CONF.PRINT_INITA.Height;
+    const width = this._config.blankPanel.printInita.Width;
+    const height = this._config.blankPanel.printInita.Height;
     LODOP.ADD_PRINT_TEXT(height - 15, width / 2, 120, 30, '第#页/共&页');
     LODOP.SET_PRINT_STYLEA(0, 'ItemType', 2);
   }
@@ -260,7 +274,7 @@ export class DrawComponent {
     rowHeaderArr[level] = rowHeaderArr[level] || '';
     columns.map((column, index) => {
       tableHeader = `<th nowrap width="${column.width}" colspan="${column.colSpan || 1}" rowspan="${column.rowSpan || 1}"
-                      style="font-size: 12px;font-weight: 500;border: solid 1px black;">
+                      style="font-size: 12px;font-weight: 900;border: solid 1px black;">
                      <div align="center">${column.label}</div></th>`;
       rowHeaderArr[level] += tableHeader;
       if (column.isParent) {
@@ -274,21 +288,8 @@ export class DrawComponent {
 
   // 主表列式数据陈列
   drawTableContent (option, tableData, extendOptions) {
-    if (!Array.isArray(option.config)) {
-      const keyArr = Object.keys(option.config).sort(option.config.label)
-      const ret = []
-      keyArr.forEach(row => {
-        ret.push(
-          {
-            label: option.config[row],
-            colSpan: Math.floor(24 / keyArr.length)
-          }
-        )
-      })
-      option.config = ret
-    }
     let tableHtml = '<tr height="22px" >'
-    option.config.forEach(function (row) {
+    option.orderModel.forEach(function (row) {
       let propValue = ''
       if (row.prop) {
         if (row.render) {
@@ -305,18 +306,18 @@ export class DrawComponent {
         tableHtml += '</tr><tr height="22px" >'
       }
     })
-    tableHtml = `</tr><table class="table-layout-content" border
+    tableHtml = `</tr><table class="table-layout-content"
         style ="font-family: '宋体', Arial, Helvetica, sans-serif;border-collapse: collapse;font-size: 12px;"
-        width="${option.params.Width}" >${tableHtml}</table>`
+        width="${option.position.Width}" >${tableHtml}</table>`
     LODOP.ADD_PRINT_TABLE(
-      option.params.Top,
-      option.params.Left,
-      option.params.Width,
-      option.params.Height,
+      option.position.Top,
+      option.position.Left,
+      option.position.Width,
+      option.position.Height,
       this._styleFlie + `<body>${tableHtml}</body>`
     )
-    for (const item in option.style) {
-      LODOP.SET_PRINT_STYLEA(0, item, option.style[item]);
+    for (const item in option.params) {
+      LODOP.SET_PRINT_STYLEA(0, item, option.params[item]);
     }
   }
 

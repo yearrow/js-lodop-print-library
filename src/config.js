@@ -1,61 +1,79 @@
 const defaultConfig = {
-  SYSTEM_DEFAULT_CONF: {
-    SET_PREVIEW_WINDOW: {
-      intDispMode: 1,
-      intToolMode: 2,
-      blDirectPrint: 1,
-      inWidth: 0,
+  global: {
+    
+  },
+  blankPanel: {
+    setPreviewWindow: {
+      intDispMode: 1, // 预览比例 0--适高1--正常大小2--适宽。
+      intToolMode: 2, // 工具条和按钮，数字型 0--显示工具条1--显示按钮 2--两个都显示 3--两个都不显示 
+      blDirectPrint: 1, // 打印按钮是否“直接打印” 1-是 0-否（弹出界面“选机打印”）
+      inWidth: 0, // 窗口宽高 当inWidth 或intHeight 小于等于0时窗口最大化(整个打印的窗口，占电脑满屏)
       intHeight: 0,
-      strTitleButtonCaptoin: '打印预览.开始打印'
+      strTitleButtonCaptoin: '打印预览.开始打印' // 预览窗口和打印按钮的名称组合
     },
-    PRINT_INITA: {
-      Top: 10,
+    printInita: { // 打印初始化
+      Top: 10, // 整页上边距
       Left: 10,
       Width: 1000,
-      Height: 740,
+      Height: 740, // 可视编辑区域的高度
       strPrintName: '基于LODOP的打印作业'
     },
-    SET_PRINT_MODE: {
-      strModeType: 'POS_BASEON_PAPER', // 设置输出位置以纸张边缘为基点
-      varModeValue: 0 // 以可打印区域的边缘为基点
-    },
-    SET_PRINT_PAGESIZE: {
+    setPrintPagesize: {
       intOrient: 2, // 横向打印，固定纸张
       PageWidth: 0,
       PageHeight: 0,
       strPageName: 'A4'
     },
-    SET_SHOW_MODE: {
-      strModeType: 'LANDSCAPE_DEFROTATED',
-      varModeValue: 1
+    setShowMode: {
+      strModeType: 'LANDSCAPE_DEFROTATED', // 横向打印的预览默认旋转90度（正向显示）
+      varModeValue: 1 // 对应的值, 1或true=是
     }
   },
-  STYLE_FILE_PATH: 'asset'
+  drawBarcode: {
+    style: {
+      //   ShowBarText: , // (一维)条码的码值是否显示
+      //   QRCodeVersion: , // 设置二维码QRCode版本值，其决定容量
+      //   QRCodeErrorLevel: , // 设置二维码QRCode纠错等级
+      //   QRCodeEncodeMode: , // 设置二维码QRCode编码模式
+      //   ContentVName: , // 设置打印设计返回程序代码时的内容参数变量名, (当PROGRAM_CONTENT_BYVAR真时ContentVName才有效)
+      //   DataCharset: , // 设置二维条码的数据集
+      //   GroundColor: , // 设置条码的背景色
+      //   AlignJustify: , // 设置“text文本”是否两端对齐或“barcode条码文字”靠齐方式
+      //   NotOnlyHighPrecision: , // 设置条码适应低精度输出或扫描设备
+    }
+  },
+  drawText: {
+    style: {
+      FontName: '宋体',
+      FontSize: 20,
+      FontColor: '#0000EE',
+      //   FontName: '宋体',
+      //   FontSize: 9,
+      //   FontColor: '#FFB400',
+      //   Bold: 0,
+      //   Italic: 0,
+      //   Underline: 0,
+      Alignment: 2, // 数字型，1--左靠齐 2--居中 3--右靠齐
+      //   LineSpacing: , // 纯文本的行间距
+      //   LetterSpacing: , // 纯文本的字间距
+      //   AlignJustify: , // 设置“text文本”是否两端对齐或“barcode条码文字”靠齐方式.设置“text文本”时，1代表两端对齐，0代表不处理（默认）；设置“barcode条码文字”时，0-两端对齐(默认)  1-左靠齐  2-居中  3-右靠齐；
+      //   ReadOnly: 0, // 纯文本内容在打印维护时，是否禁止修改 0--否 1--是 默认“是”
+      //   TextFrame: , // 文本的外框类型
+      //   TextNeatRow: , // 设置多行Text对象文本行是否尽量对齐
+    }
+  },
+  drawImage: {
+    style: {
+      //   Stretch: 0, // 图片截取缩放模式 0--截取图片 1--扩展（可变形）缩放 2--按原图长和宽比例（不变形）缩放
+      //   TransColor: , // 透明图片的底色
+    }
+  }
 };
 
 export {
   defaultConfig
 };
-// const textStyle =  {
-//   FontName: '宋体',
-//   FontSize: 9,
-//   FontColor: '#FFB400',
-//   Bold: 0,
-//   Italic: 0,
-//   Underline: 0,
-//   Alignment: 1, // 数字型，1--左靠齐 2--居中 3--右靠齐
-//   LineSpacing: , // 纯文本的行间距
-//   LetterSpacing: , // 纯文本的字间距
-//   AlignJustify: , // 设置“text文本”是否两端对齐或“barcode条码文字”靠齐方式.设置“text文本”时，1代表两端对齐，0代表不处理（默认）；设置“barcode条码文字”时，0-两端对齐(默认)  1-左靠齐  2-居中  3-右靠齐；
-//   ReadOnly: 0, // 纯文本内容在打印维护时，是否禁止修改 0--否 1--是 默认“是”
-//   TextFrame: , // 文本的外框类型
-//   TextNeatRow: , // 设置多行Text对象文本行是否尽量对齐
-// }
 
-// const imageStyle = {
-//   Stretch: 0, // 图片截取缩放模式 0--截取图片 1--扩展（可变形）缩放 2--按原图长和宽比例（不变形）缩放
-//   TransColor: , // 透明图片的底色
-// }
 // const chartStyle = {
 //   ChartStyle: , // 图表风格，字符形的控制串
 //   ChartLeftTitle: , // 图表的左标题，单行文本字符
@@ -72,22 +90,6 @@ export {
 //   BackWallColor: , // 图表的背墙颜色
 // }
 
-// const QrCodeStyle = {
-//   ShowBarText: , // (一维)条码的码值是否显示
-//   QRCodeVersion: , // 设置二维码QRCode版本值，其决定容量
-//   QRCodeErrorLevel: , // 设置二维码QRCode纠错等级
-//   QRCodeEncodeMode: , // 设置二维码QRCode编码模式
-//   ContentVName: , // 设置打印设计返回程序代码时的内容参数变量名, (当PROGRAM_CONTENT_BYVAR真时ContentVName才有效)
-//   DataCharset: , // 设置二维条码的数据集
-//   GroundColor: , // 设置条码的背景色
-//   AlignJustify: , // 设置“text文本”是否两端对齐或“barcode条码文字”靠齐方式
-//   NotOnlyHighPrecision: , // 设置条码适应低精度输出或扫描设备
-// }
-
-// const lineStyle = {
-//   PenWidth: 1, // 线条宽度px
-//   PenStyle: 0, // 线条风格 0--实线 1--破折线 2--点线 3--点划线 4--双点划线
-// }
 // const otherStyle = {
 //   Angle: 0, // 逆时针旋转角度数,以左上角为原点
 //   ItemType: 0, // 0--普通项 1--页眉页脚 2--页号项 3--页数项 4--多页项

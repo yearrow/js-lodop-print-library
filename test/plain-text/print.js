@@ -28,6 +28,7 @@ function CreatePrintPage() {
       // ReadOnly: 0, // 纯文本内容在打印维护时，是否禁止修改 0--否 1--是 默认“是”
       TextFrame: 5, // 文本的外框类型
       TextNeatRow: 1, // 设置多行Text对象文本行是否尽量对齐 
+      Angle: 0, // 逆时针旋转角度数,以左上角为原点
     }
   })
 
